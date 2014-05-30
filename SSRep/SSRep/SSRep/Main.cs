@@ -23,12 +23,18 @@ namespace SSRep
 
         private string ReplacingString(string s)
         {
+           
             const string pattern = @"<\b(\w+),\s(\w+)\(\d+\),>";//replace for <RATE_TYPE, nvarchar(4),>
             const string pattern1 = @"<\b(\w+),\s(\w+)\(\d+[,]\d+\),>";//replace for <SUBTOTAL_2, decimal(17,2),>
             const string pattern2 = @"<\b(\w+),\s(\w+),>";// replace for <AUDIT_CREATED_DTM, datetime,>
+            const string pattern3 = @"<\/\b(\w+)\/(\w+),\s(\w+)\(\d+\),>"; //replace for </BIC/PSDBILLPL, nvarchar(10),>
+            const string pattern4 = @"<\/\b(\w+)\/(\w+),\s(\w+)\(\d+[,]\d+\),>"; // replace for </BIC/PSDBILVAL, decimal(17,2),>
+           
             string dest = Regex.Replace(s, pattern, "?");
             dest = Regex.Replace(dest, pattern1, "?");
             dest = Regex.Replace(dest, pattern2, "?");
+            dest = Regex.Replace(dest, pattern3, "?");
+            dest = Regex.Replace(dest, pattern4, "?");
             return dest;
         }
 

@@ -1,0 +1,18 @@
+D:\GitHub\Self-Host OWIN\Self-Host OWIN\bin\Debug\Self-Host OWIN.exe.config
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Self-Host OWIN.exe.config
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Self-Host OWIN.exe
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Self-Host OWIN.pdb
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Diagnostics.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Host.HttpListener.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Hosting.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Owin.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.xml
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Diagnostics.xml
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Host.HttpListener.xml
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Hosting.xml
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\obj\Debug\Self-Host OWIN.csprojResolveAssemblyReference.cache
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\obj\Debug\Self-Host OWIN.exe
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\obj\Debug\Self-Host OWIN.pdb

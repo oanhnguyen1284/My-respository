@@ -30,12 +30,12 @@
         {
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnReplace = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.rtbLeft = new System.Windows.Forms.RichTextBox();
             this.rtbRight = new System.Windows.Forms.RichTextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -63,6 +63,16 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(331, 75);
             this.panel4.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(146, 17);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(84, 43);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Clear";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnClose
             // 
@@ -110,7 +120,7 @@
             this.rtbLeft.Name = "rtbLeft";
             this.rtbLeft.Size = new System.Drawing.Size(213, 266);
             this.rtbLeft.TabIndex = 0;
-            this.rtbLeft.Text = "<BILL_NUM, nvarchar(10),>";
+            this.rtbLeft.Text = "</BIC/PSDBILLPL, nvarchar(10),>";
             // 
             // rtbRight
             // 
@@ -120,16 +130,6 @@
             this.rtbRight.Size = new System.Drawing.Size(422, 266);
             this.rtbRight.TabIndex = 0;
             this.rtbRight.Text = "";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(146, 17);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(84, 43);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Clear";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Main
             // 

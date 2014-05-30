@@ -1,0 +1,10 @@
+D:\GitHub\OwinApp\OwinApp\bin\OwinApp.dll
+D:\GitHub\OwinApp\OwinApp\bin\OwinApp.pdb
+D:\GitHub\OwinApp\OwinApp\bin\Microsoft.Owin.dll
+D:\GitHub\OwinApp\OwinApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\GitHub\OwinApp\OwinApp\bin\Owin.dll
+D:\GitHub\OwinApp\OwinApp\bin\Microsoft.Owin.xml
+D:\GitHub\OwinApp\OwinApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\GitHub\OwinApp\OwinApp\obj\Debug\OwinApp.csprojResolveAssemblyReference.cache
+D:\GitHub\OwinApp\OwinApp\obj\Debug\OwinApp.dll
+D:\GitHub\OwinApp\OwinApp\obj\Debug\OwinApp.pdb

@@ -7,3 +7,12 @@ D:\Publicis\SSRep\SSRep\SSRep\obj\Debug\SSRep.csproj.GenerateResource.Cache
 D:\Publicis\SSRep\SSRep\SSRep\obj\Debug\SSRep.exe
 D:\Publicis\SSRep\SSRep\SSRep\obj\Debug\SSRep.pdb
 D:\Publicis\SSRep\SSRep\SSRep\obj\Debug\SSRep.Main.resources
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\bin\Debug\SSRep.exe.config
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.exe
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.pdb
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\bin\Debug\SSRep.exe
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\bin\Debug\SSRep.pdb
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.csprojResolveAssemblyReference.cache
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.Main.resources
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.Properties.Resources.resources
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.csproj.GenerateResource.Cache
