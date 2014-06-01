@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Self-Host OWIN", "Self-Host OWIN\Self-Host OWIN.csproj", "{B2A14420-F9F0-4996-870D-45DBD5F4C5E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCustomServer", "MyCustomServer\MyCustomServer.csproj", "{3390A48B-CFB5-45A5-B8E5-98BE09372441}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{B2A14420-F9F0-4996-870D-45DBD5F4C5E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2A14420-F9F0-4996-870D-45DBD5F4C5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2A14420-F9F0-4996-870D-45DBD5F4C5E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3390A48B-CFB5-45A5-B8E5-98BE09372441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3390A48B-CFB5-45A5-B8E5-98BE09372441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3390A48B-CFB5-45A5-B8E5-98BE09372441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3390A48B-CFB5-45A5-B8E5-98BE09372441}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

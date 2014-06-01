@@ -16,3 +16,11 @@ D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.
 D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\obj\Debug\Self-Host OWIN.csprojResolveAssemblyReference.cache
 D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\obj\Debug\Self-Host OWIN.exe
 D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\obj\Debug\Self-Host OWIN.pdb
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.AspNet.SignalR.Core.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Security.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Newtonsoft.Json.dll
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.AspNet.SignalR.Core.xml
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.xml
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Microsoft.Owin.Security.xml
+D:\GitHub\My-respository\Self-Host OWIN\Self-Host OWIN\bin\Debug\Newtonsoft.Json.xml

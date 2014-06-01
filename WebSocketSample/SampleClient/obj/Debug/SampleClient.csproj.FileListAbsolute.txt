@@ -1,0 +1,6 @@
+D:\GitHub\My-respository\WebSocketSample\SampleClient\bin\Debug\SampleClient.exe.config
+D:\GitHub\My-respository\WebSocketSample\SampleClient\bin\Debug\SampleClient.exe
+D:\GitHub\My-respository\WebSocketSample\SampleClient\bin\Debug\SampleClient.pdb
+D:\GitHub\My-respository\WebSocketSample\SampleClient\obj\Debug\SampleClient.csprojResolveAssemblyReference.cache
+D:\GitHub\My-respository\WebSocketSample\SampleClient\obj\Debug\SampleClient.exe
+D:\GitHub\My-respository\WebSocketSample\SampleClient\obj\Debug\SampleClient.pdb

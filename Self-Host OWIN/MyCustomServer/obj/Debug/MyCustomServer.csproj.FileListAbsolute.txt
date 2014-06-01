@@ -1,0 +1,5 @@
+D:\GitHub\My-respository\Self-Host OWIN\MyCustomServer\bin\Debug\MyCustomServer.dll
+D:\GitHub\My-respository\Self-Host OWIN\MyCustomServer\bin\Debug\MyCustomServer.pdb
+D:\GitHub\My-respository\Self-Host OWIN\MyCustomServer\obj\Debug\MyCustomServer.csprojResolveAssemblyReference.cache
+D:\GitHub\My-respository\Self-Host OWIN\MyCustomServer\obj\Debug\MyCustomServer.dll
+D:\GitHub\My-respository\Self-Host OWIN\MyCustomServer\obj\Debug\MyCustomServer.pdb

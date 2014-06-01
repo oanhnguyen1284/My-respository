@@ -1,0 +1,15 @@
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\WebSocketServer.exe.config
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\WebSocketServer.exe
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\WebSocketServer.pdb
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Microsoft.Owin.Diagnostics.dll
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Microsoft.Owin.dll
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Microsoft.Owin.Host.HttpListener.dll
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Microsoft.Owin.Hosting.dll
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Owin.dll
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Microsoft.Owin.xml
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Microsoft.Owin.Diagnostics.xml
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Microsoft.Owin.Host.HttpListener.xml
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\bin\Debug\Microsoft.Owin.Hosting.xml
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\obj\Debug\WebSocketServer.csprojResolveAssemblyReference.cache
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\obj\Debug\WebSocketServer.exe
+D:\GitHub\My-respository\WebSocketSample\WebSocketServer\obj\Debug\WebSocketServer.pdb
