@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="angular.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+<div ng-app="myApp">
+   <!-- <div ng-controller="FilterController as ctrl">
+        <div>
+            All entries:
+            <span ng-repeat="entry in ctrl.array">{{entry.name}} </span>
+        </div>
+        <div>
+            Entries that contain an "a":
+            <span ng-repeat="entry in ctrl.filteredArray">{{entry.name}}</span>
+        </div>
+    </div>-->
+
+   <!-- <div ng-controller="Ctrl">
+        <input type="text" ng-model="greeting"/><br>
+        No filter : {{greeting}}<br>
+        Reverse : {{greeting|reverse}}<br>
+        Reverse + uppercase:  {{greeting|reverse:true}}<br>
+    </div>-->
+
+    <div ng-controller="Cntl2">
+        Expression:
+        <input type="text" ng-model="expr"/>
+        <button ng-click="addExp(expr)">Evaluate</button>
+        <ul>
+            <li ng-repeat="expr in exprs track by $index">
+                [<a href="" ng-click="removeExp($index)">X</a> ]
+                {expr}}=><span ng-bind="$parent.$eval(expr)"/>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
