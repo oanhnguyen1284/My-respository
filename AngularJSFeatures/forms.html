@@ -67,38 +67,10 @@
             Current time is: <span my-current-time="format"></span>
         </div>
 
-        <div ng-controller="Wraps">
-            <my-dialog ng-hide="dialogIsHidden" on-close="hideDialog()">Check out the contents, {{name}}!</my-dialog>
-        </div>
 
-         <my-tabs>
-             <my-pane title="Hello">
-                 <h4>Hello</h4>
-                 <p>Lorem ipsum dolor sit amet</p>
-             </my-pane>
-             <my-pane title="World">
-                 <h4>World</h4>
-                 <em>Mauris elementum elementum enim at suscipit.</em>
-                 <p><a href ng-click="i = i + 1">counter: {{i || 0}}</a></p>
-             </my-pane>
-         </my-tabs>
+        <div enter="panel" leave>I'm content</div>
 
-        <div ng-controller="EventController">
-            Root scope <tt>MyEvent</tt> count: {{count}}
-            <ul>
-                <li ng-repeat="i in [1]" ng-controller="EventController">
-                    <button ng-click="$emit('MyEvent')">$emit('MyEvent')</button>
-                    <button ng-click="$broadcast('MyEvent')">$broadcast('MyEvent')</button>
-                    <br/>
-                    Middle scope <tt>MyEvent</tt> count: {{count}}
-                    <ul>
-                        <li ng-repeat="i in [1,2]" ng-controller="EventController">
-                            Leaf scope <tt>MyEvent</tt> count: {{count}}
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+
 
     </div>
 </body>

@@ -127,70 +127,18 @@ myApp.directive("myCurrentTime",function($interval, dateFilter){
     };
 });
 
-function Wraps($scope){
-    $scope.name = 'Tobias';
-    $scope.hideDialog=function(){
-        $scope.dialogIsHidden = true;
-        $timeout(function(){
-            $scope.dialogIsHidden = false;
-        }, 2000);
+myApp.directive("enter", function(){
+    return function(scope, element, attrs) {
+        element.bind("mouseenter", function(){
+            element.addClass(attrs.enter);
+        })
     }
-}
-myApp.directive("myDialog",function(){
-    return {
-        restrict:'E',
-        transclude:true,
-        scope:{
-            'close': '&onClose'
-        },
-        templateUrl:'my-dialog.html'
-    }
-})
-
-myApp.directive("myTabs", function () {
-    return {
-        restrict: 'E',
-        transclude: true,
-        scope: {},
-        controller: function($scope) {
-            var panes = $scope.panes = [];
-
-            $scope.select = function(pane) {
-                angular.forEach(panes, function(pane) {
-                    pane.selected = false;
-                });
-                pane.selected = true;
-            };
-
-            this.addPane = function(pane) {
-                if (panes.length === 0) {
-                    $scope.select(pane);
-                }
-                panes.push(pane);
-            };
-        },
-        templateUrl: 'my-tabs.html'
-    };
 });
 
-myApp.directive("myPane",function(){
-    return {
-        require: '^myTabs',
-        restrict: 'E',
-        transclude: true,
-        scope: {
-            title: '@'
-        },
-        link: function(scope, element, attrs, tabsCtrl) {
-            tabsCtrl.addPane(scope);
-        },
-        templateUrl: 'my-panel.html'
-    };
+myApp.directive("leave", function(){
+    return function(scope, element, attrs) {
+        element.bind("mouseleave", function(){
+            element.removeClass(attrs.enter);
+        })
+    }
 });
-
-function EventController ($scope) {
-    $scope.count =0;
-    $scope.$on('MyEvent',function(){
-        $scope.count++;
-    })
-}
