@@ -70,8 +70,18 @@
 
         <div enter="panel" leave>I'm content</div>
 
+        <div ng-repeat="item in 'somewords'.split('') track by $index" ng-click="$log.debug($event)">
+            {{$index + 1}}. {{item}}
+            {{ev.pageX}}
+        </div>
 
+        <dumb-password></dumb-password>
 
+        <input type="text" ng-model="model.title"/>
+        <input type="text" ng-model="model.content"/>
+        <zippy title="{{model.title}}">
+            The content is: {{model.content}}
+        </zippy>
     </div>
 </body>
 </html>

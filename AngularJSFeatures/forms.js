@@ -142,3 +142,54 @@ myApp.directive("leave", function(){
         })
     }
 });
+
+myApp.directive("dumbPassword", function () {
+    var validElement = angular.element('<div>{{ model.input }}</div>');
+
+    return {
+        restrict: "E",
+        replace: true,
+        templateUrl: "dumbpass.html",
+        compile: function (tElem) {
+            tElem.append(validElement);
+            return  function (scope) {
+                scope.$watch("model.input", function (value) {
+                    if(value === "password") {
+                        validElement.children(1).toggleClass("alert-box alert");
+                    }
+                });
+            }
+        }
+
+    };
+});
+
+//myApp.config(function($logProvider){
+//    $logProvider.debugEnabled(false);
+//});
+//
+//myApp.run(function ($rootScope, $log) {
+//    $rootScope.$log = $log;
+//})
+
+myApp.run(function($templateCache){
+    $templateCache.put("zippy.html", '<div><h3ng-click="toggleContent()">{{title}}</h3><div ng-show="isContentVisible" ng-transclude></div></div>')
+})
+
+myApp.directive("zippy", function($templateCache){
+    console.log($templateCache.get("zippy.html"));
+    return {
+        restrict: "E",
+        transclude: true,
+        scope: {
+            title: "@"
+        },
+        templateUrl: "zippy.html",
+        link: function (scope) {
+            scope.isContentVisible = false;
+            scope.toggleContent = function () {
+                scope.isContentVisible = !scope.isContentVisible;
+            };
+        }
+    };
+});
