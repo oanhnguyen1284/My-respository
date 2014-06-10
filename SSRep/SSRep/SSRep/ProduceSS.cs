@@ -166,6 +166,34 @@ namespace SSRep
             return columns;
         }
 
+
+        private IEnumerable<Table> GetPrimaryKeysColumns()
+        {
+            var columns = new List<Table>();
+            string tmpCon = _strConnection + ";Database='" + cbDatabases.Text + "'" ;
+            using (var connection = new SqlConnection(tmpCon))
+            {
+                using (var sqlCommand = connection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "select c.ORDINAL_POSITION, c.COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE c where Table_Name=" +
+                          " '" + txtTableName.Text + "'";
+                    connection.Open();
+                    using (var reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            columns.Add(new Table
+                            {
+                                Id = reader.GetInt16(0),
+                                ColumnName = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+            }
+            return columns;
+        }
+
         private string GetSelectStatement()
         {
             IEnumerable<Table> columnsName = GetColumnsName();
@@ -231,6 +259,95 @@ namespace SSRep
             }
 
             
+        }
+
+        private string Get_NK_HASH_ID_Column()
+        {
+            IEnumerable<Table> primaryColumns = GetPrimaryKeysColumns();
+            int i = 0;
+            var enumerable = primaryColumns as IList<Table> ?? primaryColumns.ToList();
+
+            string str = "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
+            foreach (var it in enumerable)
+            {
+
+                str += "ISNULL([" + it.ColumnName + "], '') ";
+
+                if (i + 1 < enumerable.Count)
+                {
+                    str += " + '|' +";
+                }
+                i = i + 1;
+                str += "\n";
+
+            }
+            str += " ), 2) AS NK_HASH_ID";
+
+            return str;
+        }
+
+        private string Get_FULL_HASH_ID_Column()
+        {
+            IEnumerable<Table> primaryColumns = GetColumnsName();
+            int i = 0;
+            var enumerable = primaryColumns as IList<Table> ?? primaryColumns.ToList();
+
+            string str = "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
+            foreach (var it in enumerable)
+            {
+
+                str += "ISNULL([" + it.ColumnName + "], '') ";
+
+                if (i + 1 < enumerable.Count)
+                {
+                    str += " + '|' +";
+                }
+                i = i + 1;
+                str += "\n";
+              
+
+            }
+            str += " ), 2) AS FULL_HASH_ID";
+
+            return str;
+        }
+
+        private string Get_SCD1_HASH_ID_Column()
+        {
+            const string str = "";
+            return str;
+        }
+
+        private string Get_SCD2_HASH_ID_Column()
+        {
+            const string str = "";
+            return str;
+        }
+
+        private string GetSelectStatementWithHashColumns()
+        {
+            IEnumerable<Table> columnsName = GetColumnsName();
+            int i = 0;
+            var enumerable = columnsName as IList<Table> ?? columnsName.ToList();
+
+            string selectStatement = "SELECT \n" + Get_NK_HASH_ID_Column() + ", \n" + Get_FULL_HASH_ID_Column() + ", \n";
+            foreach (var it in enumerable)
+            {
+
+                selectStatement += "[" + it.ColumnName + "]";
+
+                if (i + 1 < enumerable.Count)
+                {
+                    selectStatement += ",";
+                }
+                i = i + 1;
+                selectStatement += "\n";
+                //selectStatement += "[" + it + "]";
+
+            }
+            selectStatement += " FROM [" + cbDatabases.Text + "].[" + enumerable[0].SchemaName + "].[" + txtTableName.Text + "]";
+
+            return selectStatement;
         }
     }
 }
