@@ -17,3 +17,4 @@ D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.Main.resources
 D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.Properties.Resources.resources
 D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.csproj.GenerateResource.Cache
 D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.ProduceSS.resources
+D:\GitHub\My-respository\SSRep\SSRep\SSRep\obj\Debug\SSRep.SCDTypeDefinition.resources

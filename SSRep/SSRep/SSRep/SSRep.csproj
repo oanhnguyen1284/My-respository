@@ -58,6 +58,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SCDTypeDefinition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SCDTypeDefinition.Designer.cs">
+      <DependentUpon>SCDTypeDefinition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SingleConnection.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="UserInfo.cs" />
     <EmbeddedResource Include="Main.resx">
@@ -75,6 +82,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SCDTypeDefinition.resx">
+      <DependentUpon>SCDTypeDefinition.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -87,6 +97,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="SCD_Type\scd_type_2.txt" />
+    <Content Include="SCD_Type\scd_type_1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

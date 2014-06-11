@@ -17,7 +17,6 @@ namespace SSRep
 {
     public partial class ProduceSS : Form
     {
-        private static string _strConnection;
         private static readonly string _path = Application.StartupPath + @"\user.Info";
 
         public ProduceSS()
@@ -25,65 +24,90 @@ namespace SSRep
             InitializeComponent();
         }
 
+        #region "Events"   
+
         private void btConnect_Click(object sender, EventArgs e)
         {
             ConnectionToServer();
         }
-
-        private void ConnectionToServer()
+     
+        private void ProduceSS_Load(object sender, EventArgs e)
         {
-            
-            var connection = new SqlConnectionStringBuilder
-            {
-                DataSource = cbServerName.Text,
-                UserID = cbLogin.Text.Trim(),
-                Password = txtPassword.Text.Trim()
-            };
-            // connection.IntegratedSecurity = true;
+          //  cbServerName.DataSource = GetServerNames();
+            ReadUserInput();
+        }
 
-            _strConnection = connection.ToString();
-
-            //create connection
-            var sqlConn = new SqlConnection(_strConnection);
+        private void btProcessing_Click(object sender, EventArgs e)
+        {
             try
             {
-                //open connection
-                sqlConn.Open();
-
-
-                //get databases
-                DataTable tblDatabases = sqlConn.GetSchema("Databases");
-
-                //close connection
-                sqlConn.Close();
-
-                //add to list
-                var databases = new List<String>();
-                foreach (DataRow row in tblDatabases.Rows)
+                if (rbSelect.Checked)
                 {
-                    String strDatabaseName = row["database_name"].ToString();
+                    tfbProduceSS.Text = GetSelectStatement();
+                }
+                if (rbHashColumn.Checked)
+                {
+                    tfbProduceSS.Text = GetSelectStatementWithHashColumns();
+                }
+            }
+            catch (Exception ex)
+            {
+                rtbErrorMsg.Text = ex.ToString();
+            }
+            
+        }
+        #endregion
 
-                    databases.Add(strDatabaseName);
+        #region "Methods"
+       
+        private void ConnectionToServer()
+        {
+
+            var sqlConnBuilder = SingleConnection.GetSqlConnectionBuilder(cbServerName.Text, cbLogin.Text, txtPassword.Text);
+            // connection.IntegratedSecurity = true;
+
+            try
+            {
+
+                using (var sqlConn = SingleConnection.GetSqlConnection(sqlConnBuilder))
+                {
+                    //get databases
+                    DataTable tblDatabases = sqlConn.GetSchema("Databases");
+
+                    //close connection
+                    sqlConn.Close();
+
+                    //add to list
+                    var databases = new List<String>();
+                    foreach (DataRow row in tblDatabases.Rows)
+                    {
+                        String strDatabaseName = row["database_name"].ToString();
+
+                        databases.Add(strDatabaseName);
+                    }
+
+                    cbDatabases.DataSource = databases;
+
                 }
 
-                cbDatabases.DataSource = databases;
 
                 // writing information 
-                if(chkRemember.Checked)
+                if (chkRemember.Checked)
                     WriteUserInput();
 
                 ReadUserInput();
+
             }
             catch (Exception ex)
             {
                 rtbErrorMsg.Text = @"Cannot to Server: " + ex;
             }
-          
+
         }
 
         private IList<string> GetServerNames()
         {
-            var  serverNames = new List<String>();
+            var serverNames = new List<String>();
             SqlDataSourceEnumerator servers = SqlDataSourceEnumerator.Instance;
             DataTable serversTable = servers.GetDataSources();
 
@@ -102,7 +126,8 @@ namespace SSRep
 
 
                 }
-                catch{
+                catch
+                {
 
 
                 }
@@ -112,37 +137,11 @@ namespace SSRep
             return serverNames;
         }
 
-        private void ProduceSS_Load(object sender, EventArgs e)
-        {
-          //  cbServerName.DataSource = GetServerNames();
-            ReadUserInput();
-        }
-
-        private void btProcessing_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (rbSelect.Checked)
-                {
-                    tfbProduceSS.Text = GetSelectStatement();
-                }
-                if (rbUpdate.Checked)
-                {
-
-                }
-            }
-            catch (Exception ex)
-            {
-                rtbErrorMsg.Text = ex.ToString();
-            }
-            
-        }
-
         private IEnumerable<Table> GetColumnsName()
         {
             var columns = new List<Table>();
-            string tmpCon = _strConnection + ";Database='" + cbDatabases.Text + "'" ;
-            using (var connection = new SqlConnection(tmpCon))
+            
+            using (var connection =  SingleConnection.GetSqlConnectionToDB(cbDatabases.Text))
             {
                 using (var sqlCommand = connection.CreateCommand())
                 {
@@ -166,12 +165,11 @@ namespace SSRep
             return columns;
         }
 
-
         private IEnumerable<Table> GetPrimaryKeysColumns()
         {
             var columns = new List<Table>();
-            string tmpCon = _strConnection + ";Database='" + cbDatabases.Text + "'" ;
-            using (var connection = new SqlConnection(tmpCon))
+          
+            using (var connection = SingleConnection.GetSqlConnectionToDB(cbDatabases.Text))
             {
                 using (var sqlCommand = connection.CreateCommand())
                 {
@@ -314,13 +312,51 @@ namespace SSRep
 
         private string Get_SCD1_HASH_ID_Column()
         {
-            const string str = "";
+            string _path_scdType1 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_1.txt";
+            string[] content;
+            int i = 0;
+            string str =  "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
+            if (File.Exists(_path_scdType1))
+            {
+                content = File.ReadAllText(_path_scdType1).Split(Convert.ToChar(";"));
+                foreach (var item in content)
+                {
+                    str += "ISNULL([" + item + "], '') ";
+
+                    if (i + 1 < content.Length)
+                    {
+                        str += " + '|' +";
+                    }
+                    i = i + 1;
+                    str += "\n";
+                }
+            }
+          
             return str;
         }
 
         private string Get_SCD2_HASH_ID_Column()
         {
-            const string str = "";
+            string _path_scdType2 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_2.txt";
+            string[] content;
+            int i = 0;
+            string str = "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
+            if (File.Exists(_path_scdType2))
+            {
+                content = File.ReadAllText(_path_scdType2).Split(Convert.ToChar(";"));
+                foreach (var item in content)
+                {
+                    str += "ISNULL([" + item + "], '') ";
+
+                    if (i + 1 < content.Length)
+                    {
+                        str += " + '|' +";
+                    }
+                    i = i + 1;
+                    str += "\n";
+                }
+            }
+
             return str;
         }
 
@@ -330,7 +366,10 @@ namespace SSRep
             int i = 0;
             var enumerable = columnsName as IList<Table> ?? columnsName.ToList();
 
-            string selectStatement = "SELECT \n" + Get_NK_HASH_ID_Column() + ", \n" + Get_FULL_HASH_ID_Column() + ", \n";
+            string selectStatement = "SELECT \n" + Get_NK_HASH_ID_Column() + ", \n" + 
+                                                   Get_FULL_HASH_ID_Column() + ", \n " + 
+                                                   Get_SCD1_HASH_ID_Column() + ", \n " +
+                                                   Get_SCD2_HASH_ID_Column() + ", \n ";
             foreach (var it in enumerable)
             {
 
@@ -349,5 +388,13 @@ namespace SSRep
 
             return selectStatement;
         }
+        #endregion
+
+        private void btDefineSCDTypes_Click(object sender, EventArgs e)
+        {
+            var frm = new SCDTypeDefinition();
+            frm.ShowDialog();
+        }
+
     }
 }
