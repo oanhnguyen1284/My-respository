@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Sql;
-using System.Data.SqlClient;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.SqlServer.Server;
+using System.Xml;
+
 
 namespace SSRep
 {
     public partial class ProduceSS : Form
     {
-        private static readonly string _path = Application.StartupPath + @"\user.Info";
+        private static readonly string Path = Application.StartupPath + @"\user.Info";
 
         public ProduceSS()
         {
@@ -49,12 +45,32 @@ namespace SSRep
                 {
                     tfbProduceSS.Text = GetSelectStatementWithHashColumns();
                 }
+                if (rbUpdate.Checked)
+                {
+                    tfbProduceSS.Text = GetUpdateSatement();
+                }
+                if (rbLkQT.Checked)
+                {
+                    tfbProduceSS.Text = GetLookupQueryTemplate();
+                }
+                if (rbUpdateExpired.Checked)
+                {
+                    tfbProduceSS.Text = GetUpdateExpriedRecord();
+                }
             }
             catch (Exception ex)
             {
                 rtbErrorMsg.Text = ex.ToString();
             }
             
+        }
+
+        private void btDefineSCDTypes_Click(object sender, EventArgs e)
+        {
+            var frm = new SCDTypeDefinition();
+            frm.Columns = GetColumnsName();
+            frm.PKColumns = GetPrimaryKeysColumns();
+            frm.ShowDialog();
         }
         #endregion
 
@@ -71,6 +87,8 @@ namespace SSRep
 
                 using (var sqlConn = SingleConnection.GetSqlConnection(sqlConnBuilder))
                 {
+                    sqlConn.Open();
+
                     //get databases
                     DataTable tblDatabases = sqlConn.GetSchema("Databases");
 
@@ -143,6 +161,7 @@ namespace SSRep
             
             using (var connection =  SingleConnection.GetSqlConnectionToDB(cbDatabases.Text))
             {
+                
                 using (var sqlCommand = connection.CreateCommand())
                 {
                     sqlCommand.CommandText = "select c.name, s.name from sys.columns c inner join sys.tables t on t.object_id = c.object_id "+
@@ -159,7 +178,9 @@ namespace SSRep
                             });
                         }
                     }
+                    connection.Close();
                 }
+               
             }
 
             return columns;
@@ -171,6 +192,7 @@ namespace SSRep
           
             using (var connection = SingleConnection.GetSqlConnectionToDB(cbDatabases.Text))
             {
+               
                 using (var sqlCommand = connection.CreateCommand())
                 {
                     sqlCommand.CommandText = "select c.ORDINAL_POSITION, c.COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE c where Table_Name=" +
@@ -182,13 +204,46 @@ namespace SSRep
                         {
                             columns.Add(new Table
                             {
-                                Id = reader.GetInt16(0),
+                                Id = reader.GetInt32(0),
                                 ColumnName = reader.GetString(1)
                             });
                         }
                     }
+                    connection.Close();
                 }
+              
             }
+            return columns;
+        }
+
+        private IEnumerable<Table> GetColumnsNotPK()
+        {
+            var columns = new List<Table>();
+
+            using (var connection = SingleConnection.GetSqlConnectionToDB(cbDatabases.Text))
+            {
+
+                using (var sqlCommand = connection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "select c.table_schema, c.COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS c where Table_Name=" +
+                          " '" + txtTableName.Text + "' AND c.COLUMN_NAME NOT IN (select COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where Table_Name='" + txtTableName.Text +"')";
+                    connection.Open();
+                    using (var reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            columns.Add(new Table
+                            {
+                                SchemaName = reader.GetString(0),
+                                ColumnName = reader.GetString(1)
+                            });
+                        }
+                    }
+                    connection.Close();
+                }
+
+            }
+
             return columns;
         }
 
@@ -218,16 +273,57 @@ namespace SSRep
             return selectStatement;
         }
 
+        private string GetUpdateSatement()
+        {
+            IEnumerable<Table> columnsName = GetColumnsNotPK();
+            int i = 0;
+            var enumerable = columnsName as IList<Table> ?? columnsName.ToList();
+
+         //   string updateStatement = "UPDATE [" + cbDatabases.Text + "].[" + enumerable[0].SchemaName + "].[" + txtTableName.Text + "]\n SET " ;
+            var updateStatement = new StringBuilder();
+             updateStatement.Append("UPDATE [SAP].[" + txtTableName.Text + "]\n SET ");
+            foreach (var it in enumerable)
+            {
+
+                updateStatement.Append("[" + it.ColumnName + "]=?");
+
+                if (i + 1 < enumerable.Count)
+                {
+                    updateStatement.Append(",");
+                }
+                i = i + 1;
+                updateStatement.Append("\n");
+                //selectStatement += "[" + it + "]";
+
+            }
+            updateStatement.Append(", [AUDIT_LAST_UPDATED_DTM] = ? WHERE ");
+
+            var columnsPKName = GetPrimaryKeysColumns().ToList();
+            i = 0;
+            foreach (var cl in columnsPKName)
+            {
+                updateStatement.Append("[" + cl.ColumnName + "]=?");
+                if (i + 1 < columnsPKName.Count)
+                {
+                    updateStatement.Append(" AND ");
+                }
+                i = i + 1;
+                updateStatement.Append("\n");
+            }
+            updateStatement.Append(" AND ? = 'TRUE'");
+            return updateStatement.ToString();
+        }
+
         private void WriteUserInput()
         {
-            if (!File.Exists(_path))
+            if (!File.Exists(Path))
             {
-                File.Create(_path);
+                File.Create(Path);
             }
-            if (File.Exists(_path))
+            if (File.Exists(Path))
             {
                 string content = "server:" + cbServerName.Text + ";user:" + cbLogin.Text + ";password:" + txtPassword.Text + ";isRemember:" + chkRemember.Checked;
-                using (var sw = new StreamWriter(_path))
+                using (var sw = new StreamWriter(Path))
                 {
                     sw.Write(content);
                 }
@@ -238,9 +334,9 @@ namespace SSRep
 
         private void ReadUserInput()
         {
-            if (File.Exists(_path))
+            if (File.Exists(Path))
             {
-                string[] content = File.ReadAllText(_path).Split(Convert.ToChar(";"));
+                string[] content = File.ReadAllText(Path).Split(Convert.ToChar(";"));
               
                 foreach (var s in content)
                 {
@@ -312,16 +408,15 @@ namespace SSRep
 
         private string Get_SCD1_HASH_ID_Column()
         {
-            string _path_scdType1 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_1.txt";
-            string[] content;
+            string pathSCDType1 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_1.txt";
             int i = 0;
             string str =  "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
-            if (File.Exists(_path_scdType1))
+            if (File.Exists(pathSCDType1))
             {
-                content = File.ReadAllText(_path_scdType1).Split(Convert.ToChar(";"));
+                string[] content = File.ReadAllText(pathSCDType1).Split(Convert.ToChar(";"));
                 foreach (var item in content)
                 {
-                    str += "ISNULL([" + item + "], '') ";
+                    str += "ISNULL([" + item.Trim() + "], '') ";
 
                     if (i + 1 < content.Length)
                     {
@@ -331,22 +426,21 @@ namespace SSRep
                     str += "\n";
                 }
             }
-          
+            str += " ), 2) AS SCD1_HASH_ID";
             return str;
         }
 
         private string Get_SCD2_HASH_ID_Column()
         {
-            string _path_scdType2 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_2.txt";
-            string[] content;
+            string pathSCDType2 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_2.txt";
             int i = 0;
             string str = "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
-            if (File.Exists(_path_scdType2))
+            if (File.Exists(pathSCDType2))
             {
-                content = File.ReadAllText(_path_scdType2).Split(Convert.ToChar(";"));
+                string[] content = File.ReadAllText(pathSCDType2).Split(Convert.ToChar(";"));
                 foreach (var item in content)
                 {
-                    str += "ISNULL([" + item + "], '') ";
+                    str += "ISNULL([" + item.Trim() + "], '') ";
 
                     if (i + 1 < content.Length)
                     {
@@ -356,7 +450,7 @@ namespace SSRep
                     str += "\n";
                 }
             }
-
+            str += " ), 2) AS SCD2_HASH_ID";
             return str;
         }
 
@@ -366,35 +460,73 @@ namespace SSRep
             int i = 0;
             var enumerable = columnsName as IList<Table> ?? columnsName.ToList();
 
-            string selectStatement = "SELECT \n" + Get_NK_HASH_ID_Column() + ", \n" + 
+            var selectStatement = new StringBuilder();
+            selectStatement.Append( "\"");
+            selectStatement.Append("SELECT \n" + Get_NK_HASH_ID_Column() + ", \n" + 
                                                    Get_FULL_HASH_ID_Column() + ", \n " + 
                                                    Get_SCD1_HASH_ID_Column() + ", \n " +
-                                                   Get_SCD2_HASH_ID_Column() + ", \n ";
+                                                   Get_SCD2_HASH_ID_Column() + ", \n ");
             foreach (var it in enumerable)
             {
 
-                selectStatement += "[" + it.ColumnName + "]";
+                selectStatement.Append( "[" + it.ColumnName + "]");
 
                 if (i + 1 < enumerable.Count)
                 {
-                    selectStatement += ",";
+                    selectStatement.Append(",");
                 }
                 i = i + 1;
-                selectStatement += "\n";
+                selectStatement.Append("\n");
                 //selectStatement += "[" + it + "]";
 
             }
-            selectStatement += " FROM [" + cbDatabases.Text + "].[" + enumerable[0].SchemaName + "].[" + txtTableName.Text + "]";
-
-            return selectStatement;
+            selectStatement.Append(" FROM   \"+");
+            selectStatement.Append("  @[User::SAPSourceDBSchema] + \".[" + txtTableName.Text + "]\"");
+          
+          return selectStatement.ToString();
         }
+
+        private string GetLookupQueryTemplate()
+        {
+            var selectStatement = new StringBuilder();
+            selectStatement.Append("\"");
+            selectStatement.Append("SELECT \n" + Get_NK_HASH_ID_Column());
+       
+            selectStatement.Append(" FROM   \"+");
+            selectStatement.Append("  @[User::SAPSourceDBSchema] + \".[" + txtTableName.Text + "]\"");
+
+            return selectStatement.ToString();
+        }
+
+        private string GetUpdateExpriedRecord()
+        {
+            //   string updateStatement = "UPDATE [" + cbDatabases.Text + "].[" + enumerable[0].SchemaName + "].[" + txtTableName.Text + "]\n SET " ;
+            var updateStatement = new StringBuilder();
+            updateStatement.Append("UPDATE [SAP].[" + txtTableName.Text + "]\n SET ");
+            updateStatement.Append("[EFFECTIVE_END_DT] = ?\n");
+            updateStatement.Append(", [CURRENT_FLAG] = 'FALSE'\n");
+            updateStatement.Append(", [AUDIT_LAST_UPDATED_DTM] = ? WHERE ");
+
+            var columnsPKName = GetPrimaryKeysColumns().ToList();
+            int i = 0;
+            foreach (var cl in columnsPKName)
+            {
+                updateStatement.Append("[" + cl.ColumnName + "]=?");
+                if (i + 1 < columnsPKName.Count)
+                {
+                    updateStatement.Append(" AND ");
+                }
+                i = i + 1;
+                updateStatement.Append("\n");
+            }
+            updateStatement.Append(" AND [CURRENT_FLAG] = 'TRUE'");
+            return updateStatement.ToString();
+        }
+
         #endregion
 
-        private void btDefineSCDTypes_Click(object sender, EventArgs e)
-        {
-            var frm = new SCDTypeDefinition();
-            frm.ShowDialog();
-        }
+      
+       
+     }
 
-    }
 }

@@ -100,8 +100,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="SCD_Type\scd_type_2.txt" />
-    <Content Include="SCD_Type\scd_type_1.txt" />
+    <EmbeddedResource Include="SCD_Type\scd_type_2.txt" />
+    <EmbeddedResource Include="SCD_Type\scd_type_1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

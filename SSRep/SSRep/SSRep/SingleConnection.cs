@@ -29,7 +29,7 @@ namespace SSRep
         }
 
         public static SqlConnection GetSqlConnection(SqlConnectionStringBuilder singleSqlConnBuilder) {
-            if (singleSqlConnBuilder != null && _singleSqlConnection == null)
+            if (singleSqlConnBuilder != null)
             {
                 _singleSqlConnection = new SqlConnection(singleSqlConnBuilder.ConnectionString);
             }

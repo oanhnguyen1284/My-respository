@@ -13,9 +13,20 @@ namespace SSRep
 {
     public partial class SCDTypeDefinition : Form
     {
-        private static readonly string _path_scdType1 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_1.txt";
-        private static readonly string _path_scdType2 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_2.txt";
-   
+        private static readonly string PathSCDType1 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_1.txt";
+        private static readonly string PathSCDType2 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_2.txt";
+
+        public IEnumerable<Table> Columns
+        {
+            get; set;
+        }
+
+        public IEnumerable<Table> PKColumns
+        {
+            get;
+            set;
+        }
+
         public SCDTypeDefinition()
         {
             InitializeComponent();
@@ -41,6 +52,48 @@ namespace SSRep
             rtb_InputSCDType.Text = string.Empty;
         }
 
+        private void SCDTypeDefinition_Load(object sender, EventArgs e)
+        {
+           
+
+        }
+
+        private void InputSCDType1()
+        {
+            string str = null;
+            int i = 0;
+            if (Columns != null)
+                foreach (var it in Columns)
+                {
+                    str += it.ColumnName;
+                    if (i + 1 < Columns.Count())
+                    {
+                        str += ';';
+                    }
+                    i = i + 1;
+                    str += "\n";
+                }
+            rtb_InputSCDType.Text = str;
+        }
+
+        private void InputSCDType2()
+        {
+            string str = null;
+            int i = 0;
+            if (Columns != null)
+                foreach (var it in PKColumns)
+                {
+                    str += it.ColumnName;
+                    if (i + 1 < PKColumns.Count())
+                    {
+                        str += ';';
+                    }
+                    i = i + 1;
+                    str += "\n";
+                }
+            rtb_InputSCDType.Text = str;
+        }
+
         private void Exit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -56,14 +109,14 @@ namespace SSRep
 
         private void WriteSCDType1() {
 
-            if (!File.Exists(_path_scdType1))
+            if (!File.Exists(PathSCDType1))
             {
-                File.Create(_path_scdType1);
+                File.Create(PathSCDType1);
             }
-            if (File.Exists(_path_scdType1))
+            if (File.Exists(PathSCDType1))
             {
                 string content =InputProccesing(rtb_InputSCDType.Text);
-                using (var sw = new StreamWriter(_path_scdType1))
+                using (var sw = new StreamWriter(PathSCDType1))
                 {
                     sw.Write(content);
                 }
@@ -73,28 +126,27 @@ namespace SSRep
 
         private void WriteSCDType2()
         {
-           if (!File.Exists(_path_scdType2))
+           if (!File.Exists(PathSCDType2))
             {
-                File.Create(_path_scdType2);
+                File.Create(PathSCDType2);
             }
-            if (File.Exists(_path_scdType2))
+            if (File.Exists(PathSCDType2))
             {
                 string content = InputProccesing(rtb_InputSCDType.Text);
-                using (var sw = new StreamWriter(_path_scdType2))
+                using (var sw = new StreamWriter(PathSCDType2))
                 {
                     sw.Write(content);
                 }
 
             }
         }
-        /// <summary>
-        /// To do some thing on this function
-        /// </summary>
-        /// <param name="inputStr"></param>
-        /// <returns></returns>
-        private string InputProccesing(string inputStr) {
-
-            //to do some thing
+      
+        private string InputProccesing(string inputStr)
+        {
+            inputStr = inputStr.Replace(Convert.ToChar(","), Convert.ToChar(";"));
+            inputStr = inputStr.Replace("[", string.Empty);
+            inputStr = inputStr.Replace("]", string.Empty);
+            
             return inputStr;
         }
 
@@ -102,20 +154,33 @@ namespace SSRep
            
             rtb_ReadSCDType.Text = "\n----------------SCD Type 1------------------\n";
           
-            if (File.Exists(_path_scdType1))
+            if (File.Exists(PathSCDType1))
             {
 
-                rtb_ReadSCDType.Text += File.ReadAllText(_path_scdType1);
+                rtb_ReadSCDType.Text += File.ReadAllText(PathSCDType1);
             }
             rtb_ReadSCDType.Text += "\n----------------SCD Type 2------------------\n";
 
-            if (File.Exists(_path_scdType2))
+            if (File.Exists(PathSCDType2))
             {
-                rtb_ReadSCDType.Text += File.ReadAllText(_path_scdType2);
+                rtb_ReadSCDType.Text += File.ReadAllText(PathSCDType2);
               
             }
         }
 
+        private void cbSCDType_TextChanged(object sender, EventArgs e)
+        {
+            if (cbSCDType.Text.ToLower() == "scd type 1")
+            {
+                 InputSCDType1();
+               
+            }
+            if (cbSCDType.Text.ToLower() == "scd type 2")
+            {
+                InputSCDType2();
+            }
+        }
+     
    
     }
 }

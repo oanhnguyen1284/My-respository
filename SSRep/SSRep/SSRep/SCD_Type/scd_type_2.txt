@@ -1,1 +1,3 @@
-dfasdfasdfa
+COMP_CODE;
+DATETO;
+OBJVERS
