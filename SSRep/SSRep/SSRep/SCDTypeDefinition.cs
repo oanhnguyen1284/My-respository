@@ -16,6 +16,56 @@ namespace SSRep
         private static readonly string PathSCDType1 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_1.txt";
         private static readonly string PathSCDType2 = Application.ExecutablePath + @"\..\..\..\SCD_Type\scd_type_2.txt";
 
+
+        #region "Events"
+        private void btSave_Click(object sender, EventArgs e)
+        {
+
+            if (cbSCDType.Text.ToLower() == "scd type 1")
+            {
+
+                //create scd type 1 file
+                WriteSCDType1();
+
+            }
+            if (cbSCDType.Text.ToLower() == "scd type 2")
+            {
+                //create scd type 2 file
+                WriteSCDType2();
+
+            }
+            //read scd types
+            ReadSCD_Types();
+            rtb_InputSCDType.Text = string.Empty;
+        }
+
+        private void SCDTypeDefinition_Load(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void Exit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void cbSCDType_TextChanged(object sender, EventArgs e)
+        {
+            if (cbSCDType.Text.ToLower() == "scd type 1")
+            {
+                InputSCDType1();
+
+            }
+            if (cbSCDType.Text.ToLower() == "scd type 2")
+            {
+                InputSCDType2();
+            }
+        }
+        #endregion
+
+        #region "Methods"
+       
         public IEnumerable<Table> Columns
         {
             get; set;
@@ -31,33 +81,7 @@ namespace SSRep
         {
             InitializeComponent();
         }
-
-        private void btSave_Click(object sender, EventArgs e)
-        {
-         
-            if (cbSCDType.Text.ToLower() == "scd type 1") { 
-
-                //create scd type 1 file
-                WriteSCDType1();
-               
-            }
-            if (cbSCDType.Text.ToLower() == "scd type 2")
-            {
-                //create scd type 2 file
-                WriteSCDType2();
-               
-            }
-            //read scd types
-            ReadSCD_Types();
-            rtb_InputSCDType.Text = string.Empty;
-        }
-
-        private void SCDTypeDefinition_Load(object sender, EventArgs e)
-        {
-           
-
-        }
-
+            
         private void InputSCDType1()
         {
             string str = null;
@@ -93,12 +117,7 @@ namespace SSRep
                 }
             rtb_InputSCDType.Text = str;
         }
-
-        private void Exit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
+               
         private bool SCDTypeValidation(){
             if (cbSCDType.Text == string.Empty)
             {
@@ -167,20 +186,7 @@ namespace SSRep
               
             }
         }
-
-        private void cbSCDType_TextChanged(object sender, EventArgs e)
-        {
-            if (cbSCDType.Text.ToLower() == "scd type 1")
-            {
-                 InputSCDType1();
-               
-            }
-            if (cbSCDType.Text.ToLower() == "scd type 2")
-            {
-                InputSCDType2();
-            }
-        }
-     
-   
+        #endregion
+        
     }
 }

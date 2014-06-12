@@ -12,7 +12,8 @@ namespace SSRep
         private static SqlConnectionStringBuilder _singleSqlConnectionBuilder;
         private static SqlConnection _singleSqlConnection;
         //constructor
-        protected SingleConnection() { }
+        protected SingleConnection() { 
+        }
 
         public static SqlConnectionStringBuilder GetSqlConnectionBuilder(string serverName, string userId, string password)
         {
@@ -42,6 +43,11 @@ namespace SSRep
                 _singleSqlConnection = new SqlConnection(_singleSqlConnectionBuilder.ConnectionString + ";Database='" + databaseName + "'");
             }
             return _singleSqlConnection;
+        }
+
+        public static bool IsConnect()
+        {
+            return _singleSqlConnectionBuilder==null? false:true;
         }
     }
 }

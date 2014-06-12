@@ -29,8 +29,8 @@ namespace SSRep
      
         private void ProduceSS_Load(object sender, EventArgs e)
         {
-          //  cbServerName.DataSource = GetServerNames();
             ReadUserInput();
+            EnableFunc();
         }
 
         private void btProcessing_Click(object sender, EventArgs e)
@@ -521,6 +521,17 @@ namespace SSRep
             }
             updateStatement.Append(" AND [CURRENT_FLAG] = 'TRUE'");
             return updateStatement.ToString();
+        }
+
+        private void EnableFunc() {
+            if (SingleConnection.IsConnect())
+            {
+                grbProcess.Enabled = true;
+            }
+            else
+            {
+                grbProcess.Enabled = false;
+            }
         }
 
         #endregion
