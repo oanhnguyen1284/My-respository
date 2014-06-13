@@ -25,6 +25,7 @@ namespace SSRep
         private void btConnect_Click(object sender, EventArgs e)
         {
             ConnectionToServer();
+            EnableFunc();
         }
      
         private void ProduceSS_Load(object sender, EventArgs e)
@@ -56,6 +57,10 @@ namespace SSRep
                 if (rbUpdateExpired.Checked)
                 {
                     tfbProduceSS.Text = GetUpdateExpriedRecord();
+                }
+                if (rbLogicalDeletes.Checked)
+                {
+                    tfbProduceSS.Text = GetSelectStatementWithLogicalDelete();
                 }
             }
             catch (Exception ex)
@@ -365,7 +370,14 @@ namespace SSRep
             foreach (var it in enumerable)
             {
 
-                str += "ISNULL([" + it.ColumnName + "], '') ";
+                //if (IsDecimalColumn(it.ColumnName))// decimal cannot used by hashbytes
+                //{
+                //    str += "ISNULL(CONVERT(varchar(32),[" + it.ColumnName + "]), '') ";
+                //}
+                //else
+                //{
+                    str += "ISNULL([" + it.ColumnName + "], '') ";
+                //}
 
                 if (i + 1 < enumerable.Count)
                 {
@@ -389,9 +401,14 @@ namespace SSRep
             string str = "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
             foreach (var it in enumerable)
             {
-
-                str += "ISNULL([" + it.ColumnName + "], '') ";
-
+                if (IsNotUsedByHashBytesFunc(it.ColumnName))// decimal cannot used by hashbytes
+                {
+                    str += "ISNULL(CONVERT(varchar(32),[" + it.ColumnName + "]), '') ";  
+                }
+                else
+                {
+                    str += "ISNULL([" + it.ColumnName + "], '') ";  
+                }
                 if (i + 1 < enumerable.Count)
                 {
                     str += " + '|' +";
@@ -416,8 +433,15 @@ namespace SSRep
                 string[] content = File.ReadAllText(pathSCDType1).Split(Convert.ToChar(";"));
                 foreach (var item in content)
                 {
-                    str += "ISNULL([" + item.Trim() + "], '') ";
 
+                    if (IsNotUsedByHashBytesFunc(item))// decimal cannot used by hashbytes
+                    {
+                        str += "ISNULL(CONVERT(varchar(32),[" + item + "]), '') ";
+                    }
+                    else
+                    {
+                        str += "ISNULL([" + item.Trim() + "], '') ";
+                    }
                     if (i + 1 < content.Length)
                     {
                         str += " + '|' +";
@@ -440,7 +464,15 @@ namespace SSRep
                 string[] content = File.ReadAllText(pathSCDType2).Split(Convert.ToChar(";"));
                 foreach (var item in content)
                 {
-                    str += "ISNULL([" + item.Trim() + "], '') ";
+
+                    //if (IsDecimalColumn(item))// decimal cannot used by hashbytes
+                    //{
+                    //    str += "ISNULL(CONVERT(varchar(32),[" + item + "]), '') ";
+                    //}
+                    //else
+                    //{
+                        str += "ISNULL([" + item.Trim() + "], '') ";
+                    //}
 
                     if (i + 1 < content.Length)
                     {
@@ -532,6 +564,56 @@ namespace SSRep
             {
                 grbProcess.Enabled = false;
             }
+        }
+
+        private string GetSelectStatementWithLogicalDelete()
+        {
+           
+            var selectStatement = new StringBuilder();
+            selectStatement.Append("\"");
+            selectStatement.Append("SELECT \n" + Get_NK_HASH_ID_Column() + "\n");
+           
+            selectStatement.Append(" FROM   \"+");
+            selectStatement.Append("  @[User::SAPSourceDBSchema] + \".[" + txtTableName.Text + "]\"");
+
+            return selectStatement.ToString();
+        }
+
+        private bool ValidateSelectStatementWithHashColumns()
+        {
+            return true;
+        }
+
+        private bool IsNotUsedByHashBytesFunc(string columnName)
+        {
+            using (var connection = SingleConnection.GetSqlConnectionToDB(cbDatabases.Text))
+            {
+                string dataType = "";
+                using (var sqlCommand = connection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "select DATA_TYPE from INFORMATION_SCHEMA.COLUMNS WHERE " +
+                                             "TABLE_NAME = '" + txtTableName.Text + "' and COLUMN_NAME ='" + columnName +
+                                             "'";
+                    connection.Open();
+                    using (var reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            dataType = reader.GetString(0);
+
+                        }
+                    }
+                    connection.Close();
+                }
+
+                if (dataType != "" && (dataType.ToLower() == "decimal" || dataType.ToLower()=="float" || dataType.ToLower()=="int") )
+                {
+                        return true;
+                }
+
+          }
+
+            return false;
         }
 
         #endregion
