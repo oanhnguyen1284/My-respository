@@ -5,6 +5,7 @@ using System.Data.Sql;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -14,6 +15,7 @@ namespace SSRep
     public partial class ProduceSS : Form
     {
         private static readonly string Path = Application.StartupPath + @"\user.Info";
+      
 
         public ProduceSS()
         {
@@ -36,6 +38,7 @@ namespace SSRep
 
         private void btProcessing_Click(object sender, EventArgs e)
         {
+              
             try
             {
                 if (rbSelect.Checked)
@@ -44,7 +47,8 @@ namespace SSRep
                 }
                 if (rbHashColumn.Checked)
                 {
-                    tfbProduceSS.Text = GetSelectStatementWithHashColumns();
+                    var th = new Thread(GeneratedSelectWithHashColumns);
+                    th.Start();
                 }
                 if (rbUpdate.Checked)
                 {
@@ -358,6 +362,11 @@ namespace SSRep
             }
 
             
+        }
+
+        private void GeneratedSelectWithHashColumns()
+        {
+            tfbProduceSS.Text = GetSelectStatementWithHashColumns();
         }
 
         private string Get_NK_HASH_ID_Column()
