@@ -412,7 +412,7 @@ namespace SSRep
             {
                 if (IsNotUsedByHashBytesFunc(it.ColumnName))// decimal cannot used by hashbytes
                 {
-                    str += "ISNULL(CONVERT(varchar(32),[" + it.ColumnName + "]), '') ";  
+                    str += "ISNULL(CONVERT(varchar(MAX),[" + it.ColumnName + "]), '') ";  
                 }
                 else
                 {
@@ -439,13 +439,13 @@ namespace SSRep
             string str =  "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
             if (File.Exists(pathSCDType1))
             {
-                string[] content = File.ReadAllText(pathSCDType1).Split(Convert.ToChar(";"));
+                string[] content = File.ReadAllText(pathSCDType1).Replace("\n","").Split(Convert.ToChar(";"));
                 foreach (var item in content)
                 {
 
                     if (IsNotUsedByHashBytesFunc(item))// decimal cannot used by hashbytes
                     {
-                        str += "ISNULL(CONVERT(varchar(32),[" + item + "]), '') ";
+                        str += "ISNULL(CONVERT(varchar(MAX),[" + item + "]), '') ";
                     }
                     else
                     {
@@ -470,7 +470,7 @@ namespace SSRep
             string str = "CONVERT(NVARCHAR(32), HashBytes('MD5',  " + "\n";
             if (File.Exists(pathSCDType2))
             {
-                string[] content = File.ReadAllText(pathSCDType2).Split(Convert.ToChar(";"));
+                string[] content = File.ReadAllText(pathSCDType2).Replace("\n","").Split(Convert.ToChar(";"));
                 foreach (var item in content)
                 {
 
