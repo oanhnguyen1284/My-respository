@@ -1,55 +1,62 @@
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var fs = require('fs');
-var routes = require('./routes');
-var users = require('./routes/user');
-var config = require('./config')(),
+var express = require('express'),
+    http = require('http'),
+    path = require('path'),
+    config = require('./config')(),
+    app = express(),
     MongoClient = require('mongodb').MongoClient,
     Admin = require('./controllers/Admin'),
     Home = require('./controllers/Home'),
     Blog = require('./controllers/Blog'),
     Page = require('./controllers/Page');
 
-var app = express();
-
-
-// view engine setup
-app.set('port',process.env.PORT ||3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(favicon());
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(app.router);
+// all environments
+// app.set('port', process.env.PORT || 3000);
+app.set('views', __dirname + '/templates');
+app.set('view engine', 'hjs');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
 app.use(express.cookieParser('fast-delivery-site'));
+app.use(express.session());
+app.use(app.router);
+//app.use(require('less-middleware')({ src: __dirname + '/public' }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
-//app.get('/', routes.index);
-//app.get('/users', users.list);
-//users.init();
 
 MongoClient.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/fastdelivery', function(err, db) {
-
-if(err) {
+    if(err) {
         console.log('Sorry, there is no mongo db server running.');
     } else {
-        var attachDB = function (req,res,next) {
-            req.db= db;
+        var attachDB = function(req, res, next) {
+            req.db = db;
             next();
-        }
-
+        };
+        app.all('/admin*', attachDB, function(req, res, next) {
+            Admin.run(req, res, next);
+        });
+        app.all('/blog/:id', attachDB, function(req, res, next) {
+            Blog.runArticle(req, res, next);
+        });
+        app.all('/blog', attachDB, function(req, res, next) {
+            Blog.run(req, res, next);
+        });
+        app.all('/services', attachDB, function(req, res, next) {
+            Page.run('services', req, res, next);
+        });
+        app.all('/careers', attachDB, function(req, res, next) {
+            Page.run('careers', req, res, next);
+        });
+        app.all('/contacts', attachDB, function(req, res, next) {
+            Page.run('contacts', req, res, next);
+        });
+        app.all('/', attachDB, function(req, res, next) {
+            Home.run(req, res, next);
+        });
         http.createServer(app).listen(config.port, function() {
             console.log(
                     'Successfully connected to mongodb://' + config.mongo.host + ':' + config.mongo.port,
@@ -57,41 +64,4 @@ if(err) {
             );
         });
     }
-})
-http.createServer(app).listen(app.get('port'),function(){
-     console.log('Express server listening on port '+ app.get('port'));
-
 });
-
-
-/// catch 404 and forwarding to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-/// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
-
-
-module.exports = app;
