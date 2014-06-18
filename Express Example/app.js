@@ -8,6 +8,12 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var routes = require('./routes');
 var users = require('./routes/user');
+var config = require('./config')(),
+    MongoClient = require('mongodb').MongoClient,
+    Admin = require('./controllers/Admin'),
+    Home = require('./controllers/Home'),
+    Blog = require('./controllers/Blog'),
+    Page = require('./controllers/Page');
 
 var app = express();
 
@@ -24,11 +30,34 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
+app.use(express.cookieParser('fast-delivery-site'));
 
-app.get('/', routes.index);
-app.get('/users', users.list);
-users.init();
+// development only
+if ('development' == app.get('env')) {
+    app.use(express.errorHandler());
+}
+//app.get('/', routes.index);
+//app.get('/users', users.list);
+//users.init();
 
+MongoClient.connect('mongodb://' + config.mongo.host + ':' + config.mongo.port + '/fastdelivery', function(err, db) {
+
+if(err) {
+        console.log('Sorry, there is no mongo db server running.');
+    } else {
+        var attachDB = function (req,res,next) {
+            req.db= db;
+            next();
+        }
+
+        http.createServer(app).listen(config.port, function() {
+            console.log(
+                    'Successfully connected to mongodb://' + config.mongo.host + ':' + config.mongo.port,
+                    '\nExpress server listening on port ' + config.port
+            );
+        });
+    }
+})
 http.createServer(app).listen(app.get('port'),function(){
      console.log('Express server listening on port '+ app.get('port'));
 
