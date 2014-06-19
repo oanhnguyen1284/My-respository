@@ -13,6 +13,7 @@ module.exports = BaseController.extend({
         var self = this;
         this.getContent(function() {
             var v = new View(res, 'home');
+            console.log(self.content);
             v.render(self.content);
         })
     },
