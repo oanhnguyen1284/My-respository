@@ -2,7 +2,7 @@
  * Created by oanhnguyen on 6/19/2014.
  */
 var Db = require('mongodb').Db;
-var Connection  = require('mongodb').Connection;
+var Connection = require('mongodb').Connection;
 var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
@@ -20,15 +20,15 @@ EmployeeProvider.prototype.getCollection=function(callback){
 };
 
 EmployeeProvider.prototype.findAll=function(callback){
-    this.getCollection(function (error, employee_collection) {
-        if(error) callback(error);
-        else{
+    this.getCollection(function(error, employee_collection) {
+        if( error ) callback(error)
+        else {
             employee_collection.find().toArray(function(error, results) {
-                if (error) callback(error);
-                else callback(null, results);
+                if( error ) callback(error)
+                else callback(null, results)
             });
         }
-        });
+    });
 
 };
 
@@ -54,7 +54,12 @@ EmployeeProvider.prototype.save = function(employees,callback){
                employee = employees[i];
                employee.created_at = new Date();
            }
+           employee_collection.insert(employees,function(){
+              callback(null,employees);
+           });
        }
    })
 }
+
+exports.EmployeeProvider=EmployeeProvider;
 
