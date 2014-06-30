@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="FoursquareApp">
+<head>
+    <title>Explore Foursquare</title>
+    <link href="content/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="content/css/toaster.css" rel="stylesheet"/>
+    <link href="content/css/loading-bar.min.css" rel="stylesheet"/>
+    <link href="content/css/amelia-bootstrap-theme.min.css" rel="stylesheet"/>
+</head>
+<body>
+    <div id="page">
+        <header class="container">
+            <div class="navbar navbar-default" id="menu">
+                 <div class="navbar-header">
+                     <button class="btn btn-success navbar-toggle"></button>
+                      <div id="logo">
+                        <h4>Explore Foursquare</h4>
+                    </div>
+                  </div>
+                 <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#/explore">Explore</a></li>
+                        <li><a href="#/places">My Places</a></li>
+                        <li><a href="#/about">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <section class="container" id="body">
+            <div data-ng-view=""></div>
+        </section>
+          <hr />
+ 
+        <footer class="container">
+            Created by Taiseer Joudeh. Twitter: <a href="http://twitter.com/tjoudeh" target="_blank">@tjoudeh</a>
+ 
+            Taiseer Joudeh Blog: <a href="http://www.bitoftech.net" target="_blank">bitoftech.net</a>
+        </footer>
+    </div>
+      <!-- 3rd party libraries -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-resource.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="scripts/toaster.js"></script>
+    <script src="scripts/loading-bar.min.js"></script>
+
+      <!-- Load app main script -->
+    <script type="text/javascript" src="app/app.js"></script>
+
+    <!-- Load controllers -->
+   <script type="text/javascript" src="app/controllers/placesExplorerController.js"></script>
+</body>
+</html>
