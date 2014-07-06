@@ -52,7 +52,15 @@
     <Compile Include="Entities\Subject.cs" />
     <Compile Include="Entities\Tutor.cs" />
     <Compile Include="Enums\Gender.cs" />
+    <Compile Include="ILearningRepository.cs" />
+    <Compile Include="LearningContext.cs" />
+    <Compile Include="LearningContextMigrationConfiguration.cs" />
+    <Compile Include="LearningDataSeeder.cs" />
     <Compile Include="Mappers\CourseMapper.cs" />
+    <Compile Include="Mappers\EnrollmentMapper.cs" />
+    <Compile Include="Mappers\StudentMapper.cs" />
+    <Compile Include="Mappers\SubjectMapper.cs" />
+    <Compile Include="Mappers\TutorMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

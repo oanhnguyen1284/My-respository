@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.OData.Builder;
+using Learning.Data.Entities;
 using Microsoft.Data.Edm;
 
 namespace Learning.ODataService
@@ -11,7 +12,7 @@ namespace Learning.ODataService
     {
         public static void Register(HttpConfiguration config)
         {
-                    
+            config.Routes.MapODataRoute("elearningOData", "OData", GenerateModel());
         }
 
         private static IEdmModel GenerateModel() {

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Learning.Data.Enums
 {
-    public class Gender
-    {
+   
         public enum Gender
         {
             Male = 0,
             Female = 1
         }
-    }
+   
 }
