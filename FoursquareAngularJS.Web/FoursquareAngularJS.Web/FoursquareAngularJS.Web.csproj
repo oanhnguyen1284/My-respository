@@ -115,8 +115,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\controllers\placesExplorerController.js" />
+    <Content Include="app\controllers\placesPhotosController.js" />
     <Content Include="app\filters\placeNameCategoryFilter.js" />
     <Content Include="app\services\placesExplorerService.js" />
+    <Content Include="app\services\placesPhotosService.js" />
+    <Content Include="app\views\placesphotos.html" />
     <Content Include="app\views\placesresults.html" />
     <Content Include="content\css\amelia-bootstrap-theme.min.css" />
     <Content Include="content\css\bootstrap.css" />

@@ -50,4 +50,27 @@
             filterPlaces(filterInput);
         });
     }
+
+    $scope.showVenuePhotos = function (venueId, venueName) {
+        placesPhotosService.get({ venueId: venueId }, function (photosResult) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/views/placesphotos.html',
+                controller: 'placesPhotosController',
+                resolve: {
+                    venueName: function () {
+                        return venueName;
+                    },
+                    venuePhotos: function () {
+                        return photosResult.response.photos.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                //$scope.selected = selectedItem;
+            }, function () {
+                //alert('Modal dismissed at: ' + new Date());
+            });
+        });
+    }
 });
