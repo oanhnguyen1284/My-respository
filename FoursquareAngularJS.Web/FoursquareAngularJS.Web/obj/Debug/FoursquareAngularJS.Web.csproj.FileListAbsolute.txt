@@ -24,3 +24,7 @@ D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\Sys
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\obj\Debug\FoursquareAngularJS.Web.csprojResolveAssemblyReference.cache
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\obj\Debug\FoursquareAngularJS.Web.dll
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\obj\Debug\FoursquareAngularJS.Web.pdb
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\FoursquareAngularJS.Data.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\EntityFramework.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\FoursquareAngularJS.Data.pdb
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\EntityFramework.xml

@@ -5,6 +5,13 @@ app.config(function ($routeProvider) {
         controller: "placesExplorerController",
         templateUrl: "/app/views/placesresults.html"
     });
+
+    $routeProvider.when("/places", {
+        controller: "myPlacesController",
+        templateUrl: "/app/views/myplaces.html"
+    });
+
+
     $routeProvider.otherwise({ redirectTo: "/explore" });
 
 });

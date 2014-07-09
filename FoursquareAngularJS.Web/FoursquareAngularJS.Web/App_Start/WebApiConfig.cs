@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace FoursquareAngularJS.Web
 {
@@ -10,10 +12,19 @@ namespace FoursquareAngularJS.Web
         public static void Register(HttpConfiguration config)
         {
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "PlacesRoute",
+                routeTemplate: "api/places/{username}",
+                defaults: new { controller = "places", userName = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+             name: "UsersRoute",
+             routeTemplate: "api/users/{userName}",
+             defaults: new { controller = "users" }
+            );
+
+            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

@@ -3,3 +3,8 @@ D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\bin\De
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\obj\Debug\FoursquareAngularJS.Data.csprojResolveAssemblyReference.cache
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\obj\Debug\FoursquareAngularJS.Data.dll
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\obj\Debug\FoursquareAngularJS.Data.pdb
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\bin\Debug\FoursquareAngularJS.Data.dll.config
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\bin\Debug\EntityFramework.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\bin\Debug\EntityFramework.xml
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Data\bin\Debug\EntityFramework.SqlServer.xml
