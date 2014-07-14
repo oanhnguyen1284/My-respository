@@ -138,9 +138,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="app\app.js" />
+    <Content Include="app\controllers\aboutController.js" />
     <Content Include="app\controllers\myPlacesController.js" />
     <Content Include="app\controllers\placesExplorerController.js" />
     <Content Include="app\controllers\placesPhotosController.js" />
+    <Content Include="app\controllers\userContextController.js" />
     <Content Include="app\filters\placeNameCategoryFilter.js" />
     <Content Include="app\services\placesDataService.js" />
     <Content Include="app\services\placesExplorerService.js" />
@@ -148,6 +150,7 @@
     <Content Include="app\views\myplaces.html" />
     <Content Include="app\views\placesphotos.html" />
     <Content Include="app\views\placesresults.html" />
+    <Content Include="app\views\userProfile.html" />
     <Content Include="content\css\amelia-bootstrap-theme.min.css" />
     <Content Include="content\css\bootstrap.css" />
     <Content Include="content\css\bootstrap.min.css" />
@@ -183,6 +186,12 @@
       <Project>{6c313109-f78e-4c91-83db-15235e1ae90a}</Project>
       <Name>FoursquareAngularJS.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="content\fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

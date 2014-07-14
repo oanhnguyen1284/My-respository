@@ -1,4 +1,4 @@
-﻿var app = angular.module('FoursquareApp', ['ngRoute', 'ngResource', 'ui.bootstrap']);
+﻿var app = angular.module('FoursquareApp', ['ngRoute', 'ngResource', 'ui.bootstrap', 'toaster', 'chieffancypants.loadingBar']);
 app.config(function ($routeProvider) {
 
     $routeProvider.when("/explore", {

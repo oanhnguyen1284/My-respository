@@ -28,3 +28,12 @@ D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\Fou
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\EntityFramework.dll
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\FoursquareAngularJS.Data.pdb
 D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\EntityFramework.xml
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\Antlr3.Runtime.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\Bundle2Bundle.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\Microsoft.Owin.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\Owin.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\System.Web.Optimization.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\WebGrease.dll
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\Antlr3.Runtime.pdb
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\Microsoft.Owin.xml
+D:\GitHub\My-respository\FoursquareAngularJS.Web\FoursquareAngularJS.Web\bin\System.Web.Optimization.xml

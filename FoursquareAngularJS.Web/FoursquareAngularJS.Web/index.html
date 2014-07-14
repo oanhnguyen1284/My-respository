@@ -3,9 +3,11 @@
 <head>
     <title>Explore Foursquare</title>
     <link href="content/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="content/css/amelia-bootstrap-theme.min.css" rel="stylesheet" />
     <link href="content/css/toaster.css" rel="stylesheet"/>
     <link href="content/css/loading-bar.min.css" rel="stylesheet"/>
     <link href="content/css/amelia-bootstrap-theme.min.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
     <div id="page">
@@ -44,13 +46,28 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls.min.js"></script>
+
     <script src="scripts/toaster.js"></script>
     <script src="scripts/loading-bar.min.js"></script>
 
       <!-- Load app main script -->
     <script type="text/javascript" src="app/app.js"></script>
 
+    <!-- Load services -->
+    <script src="app/services/placesExplorerService.js"></script>
+    <script src="app/services/placesPhotosService.js"></script>
+    <script src="app/services/placesDataService.js"></script>
+
+
     <!-- Load controllers -->
-   <script type="text/javascript" src="app/controllers/placesExplorerController.js"></script>
+    <script src="app/controllers/placesPhotosController.js"></script>
+    <script src="app/controllers/placesExplorerController.js"></script>
+    <script src="app/controllers/userContextController.js"></script>
+    <script src="app/controllers/myPlacesController.js"></script>
+
+     <!-- Load custom filters -->
+    <script src="app/filters/placeNameCategoryFilter.js"></script>
+
+
 </body>
 </html>
