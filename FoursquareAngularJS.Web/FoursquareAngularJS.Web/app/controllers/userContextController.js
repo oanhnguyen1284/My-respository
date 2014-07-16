@@ -1,10 +1,10 @@
 ﻿'use strict';
-app.controller('userContextController', function ($scope, $modelInstance, placesDataService, venue) {
+app.controller('userContextController', function ($scope, $modalInstance, placesDataService, venue) {
     $scope.venue = venue;
     $scope.user = { username: '' };
 
     $scope.close = function () {
-        $modelInstance.dismiss('cancel');
+        $modalInstance.dismiss('cancel');
     };
 
     $scope.saveUser = function () {

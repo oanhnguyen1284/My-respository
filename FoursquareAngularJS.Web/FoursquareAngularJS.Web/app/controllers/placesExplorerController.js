@@ -1,4 +1,4 @@
-﻿app.controller('placesExplorerController', function ($scope, placesExplorerService,$filter) {
+﻿app.controller('placesExplorerController', function ($scope, placesExplorerService, placesPhotosService, placesDataService, $filter, $modal) {
     $scope.exploreNearby = "New York";
     $scope.exploreQuery = "";
     $scope.filterValue = "";
@@ -65,7 +65,7 @@
         return icon.prefix + '44' + icon.suffix;
     };
 
-    $scope.buildVenueThumbnail = function () {
+    $scope.buildVenueThumbnail = function (photo) {
         return photo.items[0].prefix + '128x128' + photo.items[0].suffix;
     };
 
@@ -95,7 +95,7 @@
     $scope.bookmarkPlace = function (venue) {
         if (!placesDataService.getUserInContext()) {
             var modalInstance = $modal.open({
-                templateUrl: 'app/views/userprofile.html',
+                templateUrl: 'app/views/userProfile.html',
                 controller: 'userContextController',
                 resolve: {
                     venue: function () {
