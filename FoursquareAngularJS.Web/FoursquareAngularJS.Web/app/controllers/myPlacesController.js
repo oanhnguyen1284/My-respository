@@ -1,4 +1,6 @@
-﻿app.controller('myPlacesController', function ($scope, placesDataService) {
+﻿'use strict';
+app.controller('myPlacesController', function ($scope, placesDataService) {
+
     $scope.myPlaces = [];
 
     //paging
@@ -13,21 +15,24 @@
     }
 
     function getUserPlaces() {
-        var userInCtx = placesDataService.userInCtx;
+
+        var userInCtx = placesDataService.getUserInContext();
 
         if (userInCtx) {
+
             placesDataService.getUserPlaces(userInCtx, $scope.currentPage - 1, $scope.pageSize).then(function (results) {
 
                 $scope.myPlaces = results.data;
 
                 var paginationHeader = angular.fromJson(results.headers("x-pagination"));
+
                 $scope.totalRecordsCount = paginationHeader.TotalCount;
 
             }, function (error) {
                 alert(error.message);
             });
         }
-    };
+    }
 
     $scope.pageChanged = function (page) {
 
